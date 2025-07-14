@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - RXRELIEF STORE</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-box {
+      background-color: #111;
+      padding: 40px;
+      border-radius: 8px;
+      text-align: center;
+      width: 320px;
+      box-shadow: 0 0 15px lime;
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+    .login-box.shake {
+      animation: shake 0.3s ease;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+    h2 {
+      color: lime;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: none;
+      font-size: 16px;
+    }
+    .btn {
+      background-color: lime;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .btn:hover {
+      background-color: green;
+      color: white;
+    }
+    .signup {
+      margin-top: 15px;
+      font-size: 14px;
+      color: white;
+    }
+    .signup a {
+      color: lime;
+      text-decoration: none;
+    }
+    .signup a:hover {
+      text-decoration: underline;
+    }
+    #loginError {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-box" id="loginBox">
+  <h2>Login to RXRELIEF</h2>
+  <input type="text" id="username" placeholder="Username" />
+  <input type="password" id="password" placeholder="Password" />
+  <input type="password" id="adminCode" placeholder="Admin Code (optional)" />
+  <button class="btn" onclick="login()">Login</button>
+  <div id="loginError">❌ Invalid login credentials. Please try again.</div>
+  <div class="signup">
+    Don't have an account? <a href="signup.html">Sign up</a>
+  </div>
+</div>
+
+<script>
+  function login() {
+    const name = document.getElementById('username').value.trim();
+    const pwd = document.getElementById('password').value.trim();
+    const code = document.getElementById('adminCode').value.trim();
+    const errorMsg = document.getElementById('loginError');
+    const loginBox = document.getElementById('loginBox');
+
+    const users = JSON.parse(localStorage.getItem('rxUsers')) || [];
+    const match = users.find(u => u.username === name && u.password === pwd);
+
+    if (!match) {
+      errorMsg.style.display = "block";
+      loginBox.classList.add("shake");
+
+      setTimeout(() => {
+        loginBox.classList.remove("shake");
+      }, 300);
+      return;
+    }
+
+    localStorage.setItem('rxLoggedIn', "true");
+    localStorage.setItem('rxUser', name);
+    errorMsg.style.display = "none";
+
+    if (code === "pillarpower") {
+      localStorage.setItem('rxIsAdmin', "true");
+      window.location.href = "admin.html";
+    } else {
+      localStorage.setItem('rxIsAdmin', "false");
+      window.location.href = "store.html";
+    }
+  }
+</script>
+
+</body>
+</html>

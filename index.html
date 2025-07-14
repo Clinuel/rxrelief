@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Home - RXRELIEF STORE</title>
+  <style>
+    body {
+      background: white;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      text-align: center;
+      color: black;
+    }
+
+    .top-bar { background-color: #111; padding: 20px; }
+    .title { font-size: 32px; color: lime; font-weight: bold; }
+
+    nav { margin-top: 10px; }
+    nav a {
+      color: white; text-decoration: none;
+      margin: 0 15px; font-size: 18px;
+      border-bottom: 2px solid transparent;
+    }
+    nav a:hover { border-bottom: 2px solid lime; }
+
+    .announcement-bar {
+      background-color: #ffe600;
+      color: black;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .home-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 50px;
+      flex-wrap: wrap;
+    }
+
+    .text-section {
+      flex: 1;
+      padding-right: 40px;
+      max-width: 600px;
+    }
+
+    .button-section {
+      flex: 0 0 auto;
+      margin-top: 20px;
+    }
+
+    .start-btn {
+      background-color: lime;
+      color: black;
+      border: none;
+      padding: 14px 24px;
+      font-size: 18px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .start-btn:hover {
+      background-color: green;
+      color: white;
+    }
+
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .carousel-item {
+      min-width: 250px;
+      background: #f0f0f0;
+      border-radius: 8px;
+      padding: 20px;
+      scroll-snap-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .carousel-item img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .carousel-item h3 {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 700px) {
+      .home-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .text-section {
+        padding-right: 0;
+      }
+
+      .button-section {
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div class="title">RXRELIEF STORE 🧪</div>
+    <nav>
+      
+      <a href="store.html">Store</a>
+      <a href="account.html">Account</a>
+      <a href="cart.html">Cart</a>
+      
+      <a href="support.html">Customer Service</a>
+    </nav>
+  </div>
+
+  <div class="announcement-bar">
+    🛍️ This Week: Get 10% off Pain Relief meds! Limited time only.
+  </div>
+
+  <div class="home-container">
+    <div class="text-section">
+      <h1>Welcome to RXRELIEF STORE</h1>
+      <p>Your trusted online pharmacy. Discover, order, and refill with ease.</p>
+      <p>Fast delivery. Secure checkout. Exceptional care.</p>
+    </div>
+
+    <div class="button-section" id="startArea">
+      <button onclick="window.location.href='login.html'" class="start-btn">Get Started</button>
+    </div>
+  </div>
+
+  <div>
+    <h2 style="margin-top: 20px;">🔥 Featured Products</h2>
+    <div class="carousel">
+      <div class="carousel-item">
+        <img src="https://i.postimg.cc/3xb7hxgP/image04.jpg" alt="Product One" />
+        <h3>Product One</h3>
+        <p>Antibiotics - $12</p>
+      </div>
+      <div class="carousel-item">
+        <img src="https://i.postimg.cc/nhrTyFVj/image01-jpg.jpg" alt="Product Two" />
+        <h3>Product Two</h3>
+        <p>Vitamins - $8</p>
+      </div>
+      <div class="carousel-item">
+        <img src="https://i.postimg.cc/BbJRDrTT/Whats-App-Image-2025-07-14-at-5-28-16-PM.jpg" alt="Product Three" />
+        <h3>Product Three</h3>
+        <p>Pain Relief - $10</p>
+      </div>
+      <div class="carousel-item">
+        <img src="https://i.postimg.cc/RFJZynys/image02.jpg" alt="Product Four" />
+        <h3>Product Four</h3>
+        <p>First Aid - $6</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const loggedIn = localStorage.getItem('rxLoggedIn');
+    if (loggedIn === "true") {
+      document.getElementById('startArea').style.display = "none";
+    }
+  </script>
+
+</body>
+</html>

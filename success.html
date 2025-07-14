@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Confirmed - RXRELIEF STORE</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin: 0;
+      overflow: hidden;
+    }
+    .center-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .message {
+      font-size: 28px;
+      color: lime;
+      animation: pop 1s ease-in-out;
+    }
+    .subtext {
+      margin-top: 10px;
+      font-size: 18px;
+      color: white;
+    }
+    @keyframes pop {
+      0%   { transform: scale(0); opacity: 0; }
+      50%  { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+    if (localStorage.getItem('rxLoggedIn') !== "true") {
+      //alert(   //silenced"Please log in to access this page.");
+      window.location.href = "login.html";
+    }
+
+    // Clear cart session data
+    localStorage.removeItem('rxCart');
+    localStorage.removeItem('rxTotal');
+    localStorage.removeItem('rxShipping');
+  </script>
+
+  <div class="center-box">
+    <div class="message">✅ Your order is on its way!</div>
+    <div class="subtext">Thank you for choosing RXRELIEF STORE</div>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = "store.html";
+    }, 6000);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Products - RXRELIEF STORE</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin: 0;
+    }
+    .top-bar { background-color: #111; padding: 20px; }
+    .title { font-size: 32px; color: lime; font-weight: bold; }
+    nav a {
+      color: white; text-decoration: none;
+      margin: 0 15px; font-size: 18px;
+      border-bottom: 2px solid transparent;
+    }
+    nav a:hover { border-bottom: 2px solid lime; }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px; padding: 40px;
+    }
+    .product {
+      background: #111; padding: 20px;
+      border-radius: 8px; box-shadow: 0 0 10px rgba(0,255,0,0.1);
+    }
+    .product img {
+      width: 100%; border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .product h3 { color: lime; margin-bottom: 6px; }
+    .product p { margin: 5px 0; }
+    .product input {
+      width: 60px; margin-top: 10px;
+      padding: 5px; border-radius: 4px;
+      border: none; text-align: center;
+    }
+    .product button {
+      background-color: green; color: white;
+      border: none; padding: 8px 16px;
+      border-radius: 6px; cursor: pointer;
+      margin-top: 10px;
+    }
+    .product button:hover { background-color: #00aa00; }
+  </style>
+</head>
+<body>
+
+  <script>
+    const loggedIn = localStorage.getItem('rxLoggedIn');
+    if (loggedIn !== "true") {
+      //alert(   //silenced"Please log in to access this page.");
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <div class="top-bar">
+    <div class="title">RXRELIEF STORE 🧪</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="account.html">Account</a>
+      <a href="cart.html">Cart</a>
+      
+      
+      <a href="support.html">Customer Service</a>
+    </nav>
+  </div>
+
+  <div class="products">
+    <div class="product">
+      <img src="https://i.postimg.cc/3xb7hxgP/image04.jpg" alt="Product One" />
+      <h3>Product One</h3>
+      <p>Category: Antibiotics</p>
+      <p>Price: $12</p>
+      <input type="number" id="qty1" value="1" min="1" />
+      <button onclick="addToCart('Product One', 12, 'qty1')">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="https://i.postimg.cc/nhrTyFVj/image01-jpg.jpg" alt="Product Two" />
+      <h3>Product Two</h3>
+      <p>Category: Vitamins</p>
+      <p>Price: $8</p>
+      <input type="number" id="qty2" value="1" min="1" />
+      <button onclick="addToCart('Product Two', 8, 'qty2')">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="https://i.postimg.cc/BbJRDrTT/Whats-App-Image-2025-07-14-at-5-28-16-PM.jpg" alt="Product Three" />
+      <h3>Product Three</h3>
+      <p>Category: Pain Relief</p>
+      <p>Price: $10</p>
+      <input type="number" id="qty3" value="1" min="1" />
+      <button onclick="addToCart('Product Three', 10, 'qty3')">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="https://i.postimg.cc/RFJZynys/image02.jpg" alt="Product Four" />
+      <h3>Product Four</h3>
+      <p>Category: First Aid</p>
+      <p>Price: $6</p>
+      <input type="number" id="qty4" value="1" min="1" />
+      <button onclick="addToCart('Product Four', 6, 'qty4')">Add to Cart</button>
+    </div>
+  </div>
+
+  <script>
+    function addToCart(name, price, qtyId) {
+      const qtyInput = document.getElementById(qtyId);
+      const quantity = parseInt(qtyInput.value) || 1;
+
+      let cart = JSON.parse(localStorage.getItem('rxCart')) || [];
+      cart.push({ name, price, quantity });
+      localStorage.setItem('rxCart', JSON.stringify(cart));
+      //alert(   //silenced`${quantity} x ${name} added to cart!`);
+    }
+  </script>
+
+</body>
+</html>

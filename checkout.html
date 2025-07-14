@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Crypto Checkout - RXRELIEF STORE</title>
+  <style>
+    body { background: black; color: white; font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; }
+    .top-bar { background-color: #111; padding: 20px; }
+    .title { font-size: 32px; color: lime; font-weight: bold; }
+    nav a {
+      color: white; text-decoration: none;
+      margin: 0 15px; font-size: 18px;
+      border-bottom: 2px solid transparent;
+    }
+    nav a:hover { border-bottom: 2px solid lime; }
+    .section {
+      margin-top: 50px;
+      max-width: 500px;
+      margin-left: auto; margin-right: auto;
+      background-color: #111; padding: 30px; border-radius: 8px;
+    }
+    select, input {
+      width: 90%; padding: 10px; margin-bottom: 20px;
+      border-radius: 6px; font-size: 16px; text-align: center; border: none;
+    }
+    .btn {
+      background-color: lime; color: black;
+      border: none; padding: 10px 20px;
+      font-size: 16px; border-radius: 6px; cursor: pointer;
+    }
+    .btn:hover { background-color: green; color: white; }
+
+    #walletArea, #paymentBtn { margin-top: 20px; display: none; }
+    #loadingModal {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      display: none; align-items: center; justify-content: center;
+      flex-direction: column; z-index: 9999;
+    }
+    .loading-text { font-size: 24px; margin-top: 20px; color: lime; }
+  </style>
+</head>
+<body>
+
+  <script>
+    const loggedIn = localStorage.getItem('rxLoggedIn');
+    if (loggedIn !== "true") {
+      //alert(   //silenced"Please log in to access this page.");
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <div class="top-bar">
+    <div class="title">RXRELIEF STORE 💸</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="store.html">Store</a>
+      <a href="cart.html">Cart</a>
+      <a href="account.html">Account</a>
+      <a href="support.html">Customer Service</a>
+    </nav>
+  </div>
+
+  <div class="section">
+    <h2>Choose Payment Method</h2>
+    <p>Total Amount: $<span id="cartTotal">0.00</span></p>
+
+    <select id="currency" onchange="updateNetworks()">
+      <option value="" disabled selected>Select Cryptocurrency</option>
+      <option value="BTC">Bitcoin</option>
+      <option value="ETH">Ethereum</option>
+      <option value="USDT">USDT</option>
+      <option value="SOL">Solana</option>
+      <option value="TRON">Tron</option>
+    </select>
+
+    <select id="network">
+      <option value="" disabled selected>Select Network</option>
+    </select>
+
+    <button class="btn" onclick="generateWallet()">Pay</button>
+
+    <div id="walletArea">
+      <p>Send <strong>$<span id="payAmount">0.00</span></strong> worth of <span id="selectedCoin"></span> via <span id="selectedNet"></span></p>
+      <p>To this address:</p>
+      <p id="walletAddress" style="word-break: break-all; font-weight: bold;"></p>
+    </div>
+
+    <div id="paymentBtn">
+      <button class="btn" onclick="showLoading()">Payment Made</button>
+    </div>
+  </div>
+
+  <div id="loadingModal">
+    <div class="spinner">🔄</div>
+    <div class="loading-text">Verifying payment...</div>
+  </div>
+
+  <script>
+    document.getElementById('cartTotal').textContent = localStorage.getItem('rxTotal') || "0.00";
+
+    const walletMap = {
+      BTC: { BTC: "1AQGxjXo4Dp5PBXfJd2ADhxLDpJ3uxNua7" },
+      ETH: {
+        ERC20: "0x379bdb05f1972779afa5641113900c6912f764ab",
+        BEP20: "0x379bdb05f1972779afa5641113900c6912f764ab"
+      },
+      USDT: {
+        TRC20: "TQ8QHa2CDaxyfiqdYzkFuwK2Kw2gBVVLvG",
+        BEP20: "0x379bdb05f1972779afa5641113900c6912f764ab",
+        ERC20: "0x379bdb05f1972779afa5641113900c6912f764ab"
+      },
+      SOL: { SOL: "FgVvgePQnAeeamoMxgCZ2bSeWUypo8LfXcHawt6uWiB8" },
+      TRON: { TRC20: "TQ8QHa2CDaxyfiqdYzkFuwK2Kw2gBVVLvG" }
+    };
+
+    const networkOptions = {
+      BTC: ["BTC"],
+      ETH: ["ERC20", "BEP20"],
+      USDT: ["ERC20", "BEP20", "TRC20"],
+      SOL: ["SOL"],
+      TRON: ["TRC20"]
+    };
+
+    function updateNetworks() {
+      const currency = document.getElementById('currency').value;
+      const networkSelect = document.getElementById('network');
+      networkSelect.innerHTML = '<option value="" disabled selected>Select Network</option>';
+
+      if (networkOptions[currency]) {
+        networkOptions[currency].forEach(net => {
+          const option = document.createElement("option");
+          option.value = net;
+          option.textContent = net;
+          networkSelect.appendChild(option);
+        });
+      }
+    }
+
+    function generateWallet() {
+      const currency = document.getElementById('currency').value;
+      const network = document.getElementById('network').value;
+
+      if (!currency || !network) {
+        //alert(   //silenced"Please select both currency and network.");
+        return;
+      }
+
+      const address = walletMap[currency]?.[network];
+      if (!address) {
+        //alert(   //silenced"No wallet available for this combination.");
+        return;
+      }
+
+      document.getElementById('selectedCoin').textContent = currency;
+      document.getElementById('selectedNet').textContent = network;
+      document.getElementById('payAmount').textContent = localStorage.getItem('rxTotal') || "0.00";
+      document.getElementById('walletAddress').textContent = address;
+
+      document.getElementById('walletArea').style.display = "block";
+      document.getElementById('paymentBtn').style.display = "block";
+    }
+
+    function showLoading() {
+      document.getElementById('loadingModal').style.display = "flex";
+      setTimeout(() => {
+        window.location.href = "verify.html";
+      }, 8000);
+    }
+  </script>
+
+</body>
+</html>

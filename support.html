@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Customer Service - RXRELIEF STORE</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin: 0;
+    }
+    .top-bar { background-color: #111; padding: 20px; }
+    .title { font-size: 32px; color: lime; font-weight: bold; }
+    nav a {
+      color: white; text-decoration: none;
+      margin: 0 15px; font-size: 18px;
+      border-bottom: 2px solid transparent;
+    }
+    nav a:hover { border-bottom: 2px solid lime; }
+    .section {
+      margin-top: 50px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #111;
+      padding: 30px;
+      border-radius: 8px;
+    }
+    textarea {
+      width: 90%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 20px;
+      font-size: 16px;
+      resize: vertical;
+    }
+    .btn {
+      background-color: lime;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn:hover { background-color: green; color: white; }
+  </style>
+</head>
+<body>
+
+  <script>
+    const loggedIn = localStorage.getItem('rxLoggedIn');
+    if (loggedIn !== "true") {
+      //alert(   //silenced"Please log in to access this page.");
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <div class="top-bar">
+    <div class="title">RXRELIEF STORE 🛠️</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="store.html">Store</a>
+      <a href="account.html">Account</a>
+      <a href="cart.html">Cart</a>
+      
+      
+    </nav>
+  </div>
+
+  <div class="section">
+    <h2>Contact Customer Service</h2>
+    <textarea id="supportMessage" rows="6" placeholder="Enter your issue or question..."></textarea>
+    <button class="btn" onclick="sendSupport()">Send Message</button>
+  </div>
+
+  <script>
+    function sendSupport() {
+      const message = document.getElementById('supportMessage').value.trim();
+      if (!message) {
+        //alert(   //silenced"Please enter a message before sending.");
+        return;
+      }
+      //alert(   //silenced"Your message has been sent. Our team will contact you shortly.");
+      document.getElementById('supportMessage').value = "";
+    }
+  </script>
+
+</body>
+</html>

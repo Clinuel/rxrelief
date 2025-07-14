@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Verifying Payment - RXRELIEF STORE</title>
+  <style>
+    body {
+      background-color: black;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+    .loading-screen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .spinner {
+      font-size: 80px;
+      animation: spin 1s linear infinite;
+    }
+    .text {
+      margin-top: 20px;
+      font-size: 24px;
+      color: lime;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+    if (localStorage.getItem('rxLoggedIn') !== "true") {
+      //alert(   //silenced"Please log in to access this page.");
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <div class="loading-screen">
+    <div class="spinner">🔄</div>
+    <div class="text">Verifying payment...</div>
+    <div class="text" style="margin-top: 10px; font-size: 16px;">
+      Please wait while we confirm your transaction.
+    </div>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = "success.html";
+    }, 10000);
+  </script>
+
+</body>
+</html>

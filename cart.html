@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Cart - RXRELIEF STORE</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin: 0;
+    }
+    .top-bar { background-color: #111; padding: 20px; }
+    .title { font-size: 32px; color: lime; font-weight: bold; }
+    nav a {
+      color: white; text-decoration: none;
+      margin: 0 15px; font-size: 18px;
+      border-bottom: 2px solid transparent;
+    }
+    nav a:hover { border-bottom: 2px solid lime; }
+    .section {
+      margin-top: 50px;
+      max-width: 500px;
+      margin-left: auto; margin-right: auto;
+      background-color: #111;
+      padding: 30px;
+      border-radius: 8px;
+    }
+    ul { text-align: left; padding-left: 0; list-style: none; }
+    li { margin-bottom: 10px; }
+    .checkout-btn {
+      background-color: lime;
+      color: black;
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+    .checkout-btn:hover {
+      background-color: green;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+    const loggedIn = localStorage.getItem('rxLoggedIn');
+    if (loggedIn !== "true") {
+      //alert(   //silenced"Please log in to access this page.");
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <div class="top-bar">
+    <div class="title">RXRELIEF STORE 🛒</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="store.html">Store</a>
+      <a href="account.html">Account</a>
+      <a href="cart.html">Cart</a>
+      <a href="support.html">Customer Service</a>
+    </nav>
+  </div>
+
+  <div class="section" id="cart-area"></div>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem('rxCart')) || [];
+    const cartArea = document.getElementById('cart-area');
+
+    if (cart.length === 0) {
+      cartArea.innerHTML = "<h2>Your Cart</h2><p>Your cart is empty.</p>";
+    } else {
+      let output = "<h2>Your Cart</h2><ul>";
+      let total = 0;
+      cart.forEach(item => {
+        const qty = parseInt(item.quantity) || 1;
+        const subtotal = qty * item.price;
+        output += `<li>${qty} x ${item.name} - $${item.price} each = $${subtotal}</li>`;
+        total += subtotal;
+      });
+      output += `</ul><p><strong>Total: $${total}</strong></p>`;
+      output += `<button class="checkout-btn" onclick="startCheckout(${total})">Checkout</button>`;
+      cartArea.innerHTML = output;
+    }
+
+    function startCheckout(amount) {
+      localStorage.setItem('rxTotal', amount.toFixed(2));
+      window.location.href = "shipping.html";
+    }
+  </script>
+
+</body>
+</html>

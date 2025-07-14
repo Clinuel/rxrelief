@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Account - RXRELIEF STORE</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin: 0;
+    }
+    .top-bar { background-color: #111; padding: 20px; }
+    .title { font-size: 32px; color: lime; font-weight: bold; }
+    nav a {
+      color: white; text-decoration: none;
+      margin: 0 15px; font-size: 18px;
+      border-bottom: 2px solid transparent;
+    }
+    nav a:hover { border-bottom: 2px solid lime; }
+    .section {
+      margin-top: 50px;
+      max-width: 400px;
+      margin-left: auto; margin-right: auto;
+      background-color: #111;
+      padding: 30px;
+      border-radius: 8px;
+    }
+    .btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .btn:hover { background-color: darkred; }
+  </style>
+</head>
+<body>
+
+  <script>
+    const loggedIn = localStorage.getItem('rxLoggedIn');
+    if (loggedIn !== "true") {
+      //alert(   //silenced"Please log in to access this page.");
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <div class="top-bar">
+    <div class="title">RXRELIEF STORE 🔐</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="store.html">Store</a>
+      <a href="cart.html">Cart</a>
+      
+      <a href="support.html">Customer Service</a>
+    </nav>
+  </div>
+
+  <div class="section">
+    <h2>Account Settings</h2>
+    <button class="btn" onclick="logoutUser()">Log Out</button>
+  </div>
+
+  <script>
+    function logoutUser() {
+      localStorage.removeItem('rxLoggedIn');
+      localStorage.removeItem('rxCart');
+      //alert(   //silenced"You have been logged out. Cart cleared.");
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>

@@ -8,117 +8,220 @@
       background: black;
       color: white;
       font-family: 'Segoe UI', sans-serif;
-      text-align: center;
       margin: 0;
+      text-align: center;
     }
-    .top-bar { background-color: #111; padding: 20px; }
-    .title { font-size: 32px; color: lime; font-weight: bold; }
+    .top-bar {
+      background-color: #111;
+      padding: 20px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .top-bar img {
+      height: 50px;
+      border-radius: 8px;
+    }
+    .title {
+      font-size: 32px;
+      color: lime;
+      font-weight: bold;
+      margin-left: 20px;
+      flex: 1;
+      text-align: left;
+    }
+    nav {
+      margin-right: 20px;
+    }
     nav a {
-      color: white; text-decoration: none;
-      margin: 0 15px; font-size: 18px;
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
       border-bottom: 2px solid transparent;
     }
-    nav a:hover { border-bottom: 2px solid lime; }
+    nav a:hover {
+      border-bottom: 2px solid lime;
+    }
+
+    .sort-bar {
+      margin: 20px;
+    }
+    select {
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+    }
+
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px; padding: 40px;
+      gap: 20px;
+      padding: 40px;
     }
     .product {
-      background: #111; padding: 20px;
-      border-radius: 8px; box-shadow: 0 0 10px rgba(0,255,0,0.1);
+      background: #111;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,255,0,0.2);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeSlide 0.6s forwards;
     }
+    .product:nth-child(1) { animation-delay: 0.1s; }
+    .product:nth-child(2) { animation-delay: 0.2s; }
+    .product:nth-child(3) { animation-delay: 0.3s; }
+    .product:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes fadeSlide {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .product img {
-      width: 100%; border-radius: 6px;
+      width: 100%;
+      border-radius: 6px;
       margin-bottom: 10px;
     }
-    .product h3 { color: lime; margin-bottom: 6px; }
-    .product p { margin: 5px 0; }
+    .product h3 {
+      color: lime;
+      margin-bottom: 6px;
+    }
+    .product p {
+      margin: 5px 0;
+    }
     .product input {
-      width: 60px; margin-top: 10px;
-      padding: 5px; border-radius: 4px;
-      border: none; text-align: center;
+      width: 60px;
+      margin-top: 10px;
+      padding: 5px;
+      border-radius: 4px;
+      border: none;
+      text-align: center;
     }
     .product button {
-      background-color: green; color: white;
-      border: none; padding: 8px 16px;
-      border-radius: 6px; cursor: pointer;
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
       margin-top: 10px;
     }
-    .product button:hover { background-color: #00aa00; }
+    .product button:hover {
+      background-color: #00aa00;
+    }
   </style>
 </head>
 <body>
 
-  <script>
-    const loggedIn = localStorage.getItem('rxLoggedIn');
-    if (loggedIn !== "true") {
-      //alert(   //silenced"Please log in to access this page.");
-      window.location.href = "login.html";
+<script>
+  const loggedIn = localStorage.getItem('rxLoggedIn');
+  if (loggedIn !== "true") {
+    window.location.href = "login.html";
+  }
+</script>
+
+<div class="top-bar">
+  <img src="https://i.postimg.cc/pVcz2bTM/IMG-20250714-WA0199.jpg" alt="Logo" />
+  <div class="title">RXRELIEF STORE 🧪</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="account.html">Account</a>
+    <a href="cart.html">Cart</a>
+    <a href="support.html">Customer Service</a>
+  </nav>
+</div>
+
+<div class="sort-bar">
+  <label for="sort">Sort By:</label>
+  <select id="sort" onchange="sortProducts()">
+    <option value="">-- Select --</option>
+    <option value="low">Price: Low to High</option>
+    <option value="high">Price: High to Low</option>
+    <option value="name">Name: A–Z</option>
+  </select>
+</div>
+
+<div class="products" id="productContainer">
+  <!-- Products will be inserted here dynamically -->
+</div>
+
+<script>
+  const products = [
+    {
+      name: 'Product One',
+      category: 'Antibiotics',
+      price: 12,
+      image: 'https://i.postimg.cc/3xb7hxgP/image04.jpg',
+      qtyId: 'qty1'
+    },
+    {
+      name: 'Product Two',
+      category: 'Vitamins',
+      price: 8,
+      image: 'https://i.postimg.cc/nhrTyFVj/image01-jpg.jpg',
+      qtyId: 'qty2'
+    },
+    {
+      name: 'Product Three',
+      category: 'Pain Relief',
+      price: 10,
+      image: 'https://i.postimg.cc/BbJRDrTT/Whats-App-Image-2025-07-14-at-5-28-16-PM.jpg',
+      qtyId: 'qty3'
+    },
+    {
+      name: 'Product Four',
+      category: 'First Aid',
+      price: 6,
+      image: 'https://i.postimg.cc/RFJZynys/image02.jpg',
+      qtyId: 'qty4'
     }
-  </script>
+  ];
 
-  <div class="top-bar">
-    <div class="title">RXRELIEF STORE 🧪</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="account.html">Account</a>
-      <a href="cart.html">Cart</a>
-      
-      
-      <a href="support.html">Customer Service</a>
-    </nav>
-  </div>
+  function displayProducts(arr) {
+    const container = document.getElementById('productContainer');
+    container.innerHTML = '';
+    arr.forEach((product, i) => {
+      container.innerHTML += `
+        <div class="product">
+          <img src="${product.image}" alt="${product.name}" />
+          <h3>${product.name}</h3>
+          <p>Category: ${product.category}</p>
+          <p>Price: $${product.price}</p>
+          <input type="number" id="${product.qtyId}" value="1" min="1" />
+          <button onclick="addToCart('${product.name}', ${product.price}, '${product.qtyId}')">Add to Cart</button>
+        </div>
+      `;
+    });
+  }
 
-  <div class="products">
-    <div class="product">
-      <img src="https://i.postimg.cc/3xb7hxgP/image04.jpg" alt="Product One" />
-      <h3>Product One</h3>
-      <p>Category: Antibiotics</p>
-      <p>Price: $12</p>
-      <input type="number" id="qty1" value="1" min="1" />
-      <button onclick="addToCart('Product One', 12, 'qty1')">Add to Cart</button>
-    </div>
-
-    <div class="product">
-      <img src="https://i.postimg.cc/nhrTyFVj/image01-jpg.jpg" alt="Product Two" />
-      <h3>Product Two</h3>
-      <p>Category: Vitamins</p>
-      <p>Price: $8</p>
-      <input type="number" id="qty2" value="1" min="1" />
-      <button onclick="addToCart('Product Two', 8, 'qty2')">Add to Cart</button>
-    </div>
-
-    <div class="product">
-      <img src="https://i.postimg.cc/BbJRDrTT/Whats-App-Image-2025-07-14-at-5-28-16-PM.jpg" alt="Product Three" />
-      <h3>Product Three</h3>
-      <p>Category: Pain Relief</p>
-      <p>Price: $10</p>
-      <input type="number" id="qty3" value="1" min="1" />
-      <button onclick="addToCart('Product Three', 10, 'qty3')">Add to Cart</button>
-    </div>
-
-    <div class="product">
-      <img src="https://i.postimg.cc/RFJZynys/image02.jpg" alt="Product Four" />
-      <h3>Product Four</h3>
-      <p>Category: First Aid</p>
-      <p>Price: $6</p>
-      <input type="number" id="qty4" value="1" min="1" />
-      <button onclick="addToCart('Product Four', 6, 'qty4')">Add to Cart</button>
-    </div>
-  </div>
-
-  <script>
-    function addToCart(name, price, qtyId) {
-      const qtyInput = document.getElementById(qtyId);
-      const quantity = parseInt(qtyInput.value) || 1;
-
-      let cart = JSON.parse(localStorage.getItem('rxCart')) || [];
-      cart.push({ name, price, quantity });
-      localStorage.setItem('rxCart', JSON.stringify(cart));
-      //alert(   //silenced`${quantity} x ${name} added to cart!`);
+  function sortProducts() {
+    const option = document.getElementById('sort').value;
+    let sorted = [...products];
+    if (option === 'low') {
+      sorted.sort((a, b) => a.price - b.price);
+    } else if (option === 'high') {
+      sorted.sort((a, b) => b.price - a.price);
+    } else if (option === 'name') {
+      sorted.sort((a, b) => a.name.localeCompare(b.name));
     }
-  </script>
+    displayProducts(sorted);
+  }
+
+  function addToCart(name, price, qtyId) {
+    const qtyInput = document.getElementById(qtyId);
+    const quantity = parseInt(qtyInput.value) || 1;
+    let cart = JSON.parse(localStorage.getItem('rxCart')) || [];
+    cart.push({ name, price, quantity });
+    localStorage.setItem('rxCart', JSON.stringify(cart));
+  }
+
+  // Initial load
+  displayProducts(products);
+</script>
 
 </body>
 </html>

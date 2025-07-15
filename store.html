@@ -1,161 +1,188 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Products - RXRELIEF STORE</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RXRELIEF Store</title>
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script src="assets/js/main.js" defer></script>
 </head>
 <body>
+  <h1>RXRELIEF Products</h1>
 
-<script>
-  const loggedIn = localStorage.getItem('rxLoggedIn');
-  if (loggedIn !== "true") {
-    window.location.href = "login.html";
-  }
-</script>
+  <div class="store">
 
-<div class="top-bar">
-  <img src="https://i.postimg.cc/pVcz2bTM/IMG-20250714-WA0199.jpg" alt="Logo" />
-  <div class="title">RXRELIEF STORE 🧪</div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="account.html">Account</a>
-    <a href="cart.html">Cart</a>
-    <a href="support.html">Customer Service</a>
-  </nav>
-</div>
+    <!-- Product 1 -->
+    <div class="product">
+      <div class="carousel">
+        <img src="https://i.postimg.cc/1XF8bDvr/Whats-App-Image-2025-07-14-at-5-27-15-PM.jpg" class="slide active" />
+        <img src="https://i.postimg.cc/L6BXf9w5/image03.jpg" class="slide" />
+      </div>
+      <h2>Amoxicillin Capsules</h2>
+      <p>Antibiotic — 500mg, 20 capsules.</p>
+      <p class="price">₦1200</p>
+      <div class="qty-controls">
+        <button onclick="changeQty('qty1', -1)">−</button>
+        <input type="number" id="qty1" value="1" min="1" />
+        <button onclick="changeQty('qty1', 1)">+</button>
+      </div>
+      <button onclick="addToCart('Amoxicillin Capsules', 1200, 'qty1')">Add to Cart</button>
+    </div>
 
-<div class="sort-bar">
-  <label for="sort">Sort By:</label>
-  <select id="sort" onchange="sortProducts()">
-    <option value="">-- Select --</option>
-    <option value="low">Price: Low to High</option>
-    <option value="high">Price: High to Low</option>
-    <option value="name">Name: A–Z</option>
-  </select>
-</div>
+    <!-- Product 2 -->
+    <div class="product">
+      <div class="carousel">
+        <img src="https://i.postimg.cc/L8x8CyHM/Whats-App-Image-2025-07-14-at-5-27-11-PM.jpg" class="slide active" />
+        <img src="https://i.postimg.cc/bwyvRXfT/Whats-App-Image-2025-07-14-at-5-27-12-PM.jpg" class="slide" />
+      </div>
+      <h2>Pain Relief Gel</h2>
+      <p>Topical — fast-absorbing formula.</p>
+      <p class="price">₦1000</p>
+      <div class="qty-controls">
+        <button onclick="changeQty('qty2', -1)">−</button>
+        <input type="number" id="qty2" value="1" min="1" />
+        <button onclick="changeQty('qty2', 1)">+</button>
+      </div>
+      <button onclick="addToCart('Pain Relief Gel', 1000, 'qty2')">Add to Cart</button>
+    </div>
 
-<div class="products" id="productContainer">
-  <!-- Products will be inserted here dynamically -->
-</div>
+    <!-- Product 3 -->
+    <div class="product">
+      <div class="carousel">
+        <img src="https://i.postimg.cc/7LbYpg6J/Whats-App-Image-2025-07-14-at-5-27-13-PM.jpg" class="slide active" />
+        <img src="https://i.postimg.cc/KYVvFRkq/Whats-App-Image-2025-07-14-at-5-27-14-PM.jpg" class="slide" />
+      </div>
+      <h2>Diabetic Test Strips</h2>
+      <p>Blood sugar diagnostics — 50 strips.</p>
+      <p class="price">₦2000</p>
+      <div class="qty-controls">
+        <button onclick="changeQty('qty3', -1)">−</button>
+        <input type="number" id="qty3" value="1" min="1" />
+        <button onclick="changeQty('qty3', 1)">+</button>
+      </div>
+      <button onclick="addToCart('Diabetic Test Strips', 2000, 'qty3')">Add to Cart</button>
+    </div>
 
-<script>
-  const products = [
-    {
-      name: 'Product One',
-      category: 'Antibiotics',
-      price: 12,
-      image: 'https://i.postimg.cc/3xb7hxgP/image04.jpg',
-      qtyId: 'qty1'
-    },
-    {
-      name: 'Product Two',
-      category: 'Vitamins',
-      price: 8,
-      image: 'https://i.postimg.cc/nhrTyFVj/image01-jpg.jpg',
-      qtyId: 'qty2'
-    },
-    {
-      name: 'Product Three',
-      category: 'Pain Relief',
-      price: 10,
-      image: 'https://i.postimg.cc/BbJRDrTT/Whats-App-Image-2025-07-14-at-5-28-16-PM.jpg',
-      qtyId: 'qty3'
-    },
-    {
-      name: 'Product Four',
-      category: 'First Aid',
-      price: 6,
-      image: 'https://i.postimg.cc/RFJZynys/image02.jpg',
-      qtyId: 'qty4'
-    },
-{
-  name: 'Amoxicillin Capsules',
-  category: 'Antibiotics',
-  price: 12,
-  image: 'https://i.postimg.cc/L6BXf9w5/image03.jpg',
-  qtyId: 'qty8'
-},
-{
-  name: 'Pain Relief Gel',
-  category: 'Topical',
-  price: 10,
-  image: 'https://i.postimg.cc/L8x8CyHM/Whats-App-Image-2025-07-14-at-5-27-11-PM.jpg',
-  qtyId: 'qty9'
-},
-{
-  name: 'Blood Pressure Monitor',
-  category: 'Equipment',
-  price: 55,
-  image: 'https://i.postimg.cc/bwyvRXfT/Whats-App-Image-2025-07-14-at-5-27-12-PM.jpg',
-  qtyId: 'qty10'
-},
-{
-  name: 'Diabetic Test Strips',
-  category: 'Diagnostics',
-  price: 20,
-  image: 'https://i.postimg.cc/7LbYpg6J/Whats-App-Image-2025-07-14-at-5-27-13-PM.jpg',
-  qtyId: 'qty11'
-},
-{
-  name: 'Baby Lotion',
-  category: 'Baby Care',
-  price: 9,
-  image: 'https://i.postimg.cc/KYVvFRkq/Whats-App-Image-2025-07-14-at-5-27-14-PM.jpg',
-  qtyId: 'qty12'
-},
-{
-  name: 'Skincare Cream',
-  category: 'Personal Care',
-  price: 11,
-  image: 'https://i.postimg.cc/ry4zVC9S/Whats-App-Image-2025-07-14-at-5-27-16-PM.jpg',
-  qtyId: 'qty13'
-}
+    <!-- Product 4 -->
+    <div class="product">
+      <div class="carousel">
+        <img src="https://i.postimg.cc/ry4zVC9S/Whats-App-Image-2025-07-14-at-5-27-16-PM.jpg" class="slide active" />
+        <img src="https://i.postimg.cc/TYX1pLkB/Whats-App-Image-2025-07-14-at-5-28-12-PM.jpg" class="slide" />
+      </div>
+      <h2>Baby Lotion</h2>
+      <p>Gentle moisture — 200ml for sensitive skin.</p>
+      <p class="price">₦850</p>
+      <div class="qty-controls">
+        <button onclick="changeQty('qty4', -1)">−</button>
+        <input type="number" id="qty4" value="1" min="1" />
+        <button onclick="changeQty('qty4', 1)">+</button>
+      </div>
+      <button onclick="addToCart('Baby Lotion', 850, 'qty4')">Add to Cart</button>
+    </div>
 
+    <!-- Product 5 -->
+    <div class="product">
+      <div class="carousel">
+        <img src="https://i.postimg.cc/sxmGy5FF/Whats-App-Image-2025-07-14-at-5-28-18-PM.jpg" class="slide active" />
+        <img src="https://i.postimg.cc/W3Rk72my/Whats-App-Image-2025-07-14-at-5-28-19-PM.jpg" class="slide" />
+      </div>
+      <h2>Vitamin C Tablets</h2>
+      <p>Immune support — 1000mg, 30 tablets.</p>
+      <p class="price">₦650</p>
+      <div class="qty-controls">
+        <button onclick="changeQty('qty5', -1)">−</button>
+        <input type="number" id="qty5" value="1" min="1" />
+        <button onclick="changeQty('qty5', 1)">+</button>
+      </div>
+      <button onclick="addToCart('Vitamin C Tablets', 650, 'qty5')">Add to Cart</button>
+    </div>
 
-  ];
+    <!-- Product 6 -->
+    <div class="product">
+      <div class="carousel">
+        <img src="https://i.postimg.cc/Rh4JjXDQ/Whats-App-Image-2025-07-14-at-5-28-19-PM-1.jpg" class="slide active" />
+        <img src="https://i.postimg.cc/50wF7Zn2/Whats-App-Image-2025-07-14-at-5-28-20-PM.jpg" class="slide" />
+      </div>
+      <h2>Skincare Cream</h2>
+      <p>Hydrating formula — 100ml, all skin types.</p>
+      <p class="price">₦1100</p>
+      <div class="qty-controls">
+        <button onclick="changeQty('qty6', -1)">−</button>
+        <input type="number" id="qty6" value="1" min="1" />
+        <button onclick="changeQty('qty6', 1)">+</button>
+      </div>
+      <button onclick="addToCart('Skincare Cream', 1100, 'qty6')">Add to Cart</button>
+    </div>
 
-  function displayProducts(arr) {
-    const container = document.getElementById('productContainer');
-    container.innerHTML = '';
-    arr.forEach((product, i) => {
-      container.innerHTML += `
-        <div class="product">
-          <img src="${product.image}" alt="${product.name}" />
-          <h3>${product.name}</h3>
-          <p>Category: ${product.category}</p>
-          <p>Price: $${product.price}</p>
-          <input type="number" id="${product.qtyId}" value="1" min="1" />
-          <button onclick="addToCart('${product.name}', ${product.price}, '${product.qtyId}')">Add to Cart</button>
-        </div>
-      `;
-    });
-  }
+    <!-- Product 7 -->
+    <div class="product">
+      <div class="carousel">
+        <img src="https://i.postimg.cc/wMbzzBBx/image01-jpg.jpg" class="slide active" />
+        <img src="https://i.postimg.cc/2y5YgWrX/image02.jpg" class="slide" />
+      </div>
+      <h2>Multivitamins</h2>
+      <p>Daily health support — 30 tablets.</p>
+      <p class="price">₦1000</p>
+      <div class="qty-controls">
+        <button onclick="changeQty('qty7', -1)">−</button>
+        <input type="number" id="qty7" value="1" min="1" />
+        <button onclick="changeQty('qty7', 1)">+</button>
+      </div>
+      <button onclick="addToCart('Multivitamins', 1000, 'qty7')">Add to Cart</button>
+    </div>
 
-  function sortProducts() {
-    const option = document.getElementById('sort').value;
-    let sorted = [...products];
-    if (option === 'low') {
-      sorted.sort((a, b) => a.price - b.price);
-    } else if (option === 'high') {
-      sorted.sort((a, b) => b.price - a.price);
-    } else if (option === 'name') {
-      sorted.sort((a, b) => a.name.localeCompare(b.name));
-    }
-    displayProducts(sorted);
-  }
+    <!-- Product 8 -->
+    <div class="product">
+      <div class="carousel">
+        <img src="https://i.postimg.cc/QMkrtmMy/image04.jpg" class="slide active" />
+        <img src="https://i.postimg.cc/KzGhgTkv/Whats-App-Image-2025-07-14-at-5-28-16-PM.jpg" class="slide" />
+      </div>
+      <h2>Paracetamol</h2>
+      <p>Pain & fever relief — 500mg, 20 tablets.</p>
+      <p class="price">₦600</p>
+      <div class="qty-controls">
+        <button onclick="changeQty('qty8', -1)">−</button>
+        <input type="number" id="qty8" value="1" min="1" />
+        <button onclick="changeQty('qty8', 1)">+</button>
+      </div>
+      <button onclick="addToCart('Paracetamol', 600, 'qty8')">Add to Cart</button>
+    </div>
 
-  function addToCart(name, price, qtyId) {
-    const qtyInput = document.getElementById(qtyId);
-    const quantity = parseInt(qtyInput.value) || 1;
-    let cart = JSON.parse(localStorage.getItem('rxCart')) || [];
-    cart.push({ name, price, quantity });
-    localStorage.setItem('rxCart', JSON.stringify(cart));
-  }
+    <!-- Product 9 -->
+    <div class="product">
+      <div class="carousel">
+        <img src="https://i.postimg.cc/NMBB7VVt/Whats-App-Image-2025-07-14-at-5-28-23-PM.jpg" class="slide active" />
+        <img src="https://i.postimg.cc/XJL32LSC/Whats-App-Image-2025-07-14-at-5-28-27-PM.jpg" class="slide" />
+      </div>
+      <h2>Cough Syrup</h2>
+      <p>Cold and cough remedy — 100ml bottle.</p>
+      <p class="price">₦750</p>
+      <div class="qty-controls">
+        <button onclick="changeQty('qty9', -1)">−</button>
+        <input type="number" id="qty9" value="1" min="1" />
+        <button onclick="changeQty('qty9', 1)">+</button>
+      </div>
+      <button onclick="addToCart('Cough Syrup', 750, 'qty9')">Add to Cart</button>
+    </div>
 
-  // Initial load
-  displayProducts(products);
-</script>
+    <!-- Product 10 -->
+    <div class="product">
+      <div class="carousel">
+        <img src="https://i.postimg.cc/CKyFddsz/Whats-App-Image-2025-07-14-at-5-28-30-PM.jpg" class="slide active" />
+        <img src="https://i.postimg.cc/C1cTCKkC/Whats-App-Image-2025-07-14-at-5-28-33-PM.jpg" class="slide" />
+      </div>
+      <h2>ORS Sachets</h2>
+      <p>Oral rehydration salts — 5 sachets per pack.</p>
+      <p class="price">₦300</p>
+      <div class="qty-controls">
+        <button onclick="changeQty('qty10', -1)">−</button>
+        <input type="number" id="qty10" value="1" min="1" />
+        <button onclick="changeQty('qty10', 1)">+</button>
+      </div>
+      <button onclick="addToCart('ORS Sachets', 300, 'qty10')">Add to Cart</button>
+    </div>
 
+  </div>
 </body>
 </html>

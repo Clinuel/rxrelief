@@ -1,0 +1,129 @@
+body {
+      background: black;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      text-align: center;
+    }
+    .top-bar {
+      background-color: #111;
+      padding: 20px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .top-bar img {
+      height: 50px;
+      border-radius: 8px;
+    }
+    .title {
+      font-size: 32px;
+      color: lime;
+      font-weight: bold;
+      margin-left: 20px;
+      flex: 1;
+      text-align: left;
+    }
+    nav {
+      margin-right: 20px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+      border-bottom: 2px solid transparent;
+    }
+    nav a:hover {
+      border-bottom: 2px solid lime;
+    }
+
+    .sort-bar {
+      margin: 20px;
+    }
+    select {
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+    .product {
+      background: #111;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,255,0,0.2);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeSlide 0.6s forwards;
+    }
+    .product:nth-child(1) { animation-delay: 0.1s; }
+    .product:nth-child(2) { animation-delay: 0.2s; }
+    .product:nth-child(3) { animation-delay: 0.3s; }
+    .product:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes fadeSlide {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .product img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .product h3 {
+      color: lime;
+      margin-bottom: 6px;
+    }
+    .product p {
+      margin: 5px 0;
+    }
+    .product input {
+      width: 60px;
+      margin-top: 10px;
+      padding: 5px;
+      border-radius: 4px;
+      border: none;
+      text-align: center;
+    }
+    .product button {
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .product button:hover {
+      background-color: #00aa00;
+    }
+    .product {
+  background-color: #1c1c1c;
+  color: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 20px auto;
+  width: 300px;
+  box-shadow: 0 4px 10px rgba(0,255,0,0.2);
+  text-align: center;
+}
+.product img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+.price {
+  font-weight: bold;
+  font-size: 18px;
+  color: lime;
+}

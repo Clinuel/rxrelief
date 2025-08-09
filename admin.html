@@ -43,6 +43,11 @@
   </style>
 </head>
 <body>
+  <script>
+    if (localStorage.getItem('rxLoggedIn') !== "true") {
+      window.location.href = "index.html";
+    }
+  </script>
 
 <script>
   if (

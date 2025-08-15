@@ -82,10 +82,10 @@
     } else {
       let output = "<h2>Your Cart</h2><ul>";
       let total = 0;
-      cart.forEach(item => {
+      cart.forEach((item, idx) => {
         const qty = parseInt(item.quantity) || 1;
         const subtotal = qty * item.price;
-        output += `<li>${qty} x ${item.name} - $${item.price} each = $${subtotal}</li>`;
+        output += `<li>${qty} x ${item.name} - $${item.price} each = $${subtotal} <button onclick=\"deleteCartItem(${idx})\" style=\"margin-left:10px;background:red;color:white;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;\">Remove</button></li>`;
         total += subtotal;
       });
       output += `</ul><p><strong>Total: $${total}</strong></p>`;
@@ -97,6 +97,14 @@
       localStorage.setItem('rxTotal', amount.toFixed(2));
       window.location.href = "shipping.html";
     }
+
+      // Delete item from cart by index
+      function deleteCartItem(idx) {
+        let cart = JSON.parse(localStorage.getItem('rxCart')) || [];
+        cart.splice(idx, 1);
+        localStorage.setItem('rxCart', JSON.stringify(cart));
+        window.updateCartDisplay ? window.updateCartDisplay() : location.reload();
+      }
   </script>
 
 </body>
